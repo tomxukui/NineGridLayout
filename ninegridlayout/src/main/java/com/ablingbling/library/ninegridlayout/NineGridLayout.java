@@ -91,7 +91,7 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
             } else {
                 left = 0;
 
-                if (i % mRow > 0) {
+                if ((i / column) % mRow > 0) {
                     top += mSpace + mItemH;
                 }
             }
