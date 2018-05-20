@@ -7,54 +7,70 @@ import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CreateNineGridLayout<T extends View> extends ViewGroup {
 
+    private static final String TAG_ADD = "TAG_ADD";
+
     private int mSpace;
     private int mMaxColumn;
+    private int mMaxCount;
+    private int mAddResId;
     private int mItemW;
     private int mItemH;
     private int mRow;
-    private int mOldNum;
     private List<String> mImgs;
 
     public CreateNineGridLayout(Context context) {
         super(context);
         initData(context, null, 0);
+        initView();
     }
 
     public CreateNineGridLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         initData(context, attrs, 0);
+        initView();
     }
 
     public CreateNineGridLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initData(context, attrs, defStyleAttr);
+        initView();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public CreateNineGridLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initData(context, attrs, defStyleAttr);
+        initView();
     }
 
     private void initData(Context context, AttributeSet attrs, int defStyleAttr) {
         mSpace = DensityUtil.dp2px(10);
         mMaxColumn = 4;
-        mOldNum = 0;
+        mAddResId = R.drawable.ic_add;
+        mMaxCount = 9;
+        mImgs = new ArrayList<>();
 
         if (attrs != null) {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CreateNineGridLayout, defStyleAttr, 0);
 
             mSpace = ta.getDimensionPixelSize(R.styleable.CreateNineGridLayout_cngl_space, mSpace);
             mMaxColumn = ta.getInteger(R.styleable.CreateNineGridLayout_cngl_maxColumn, mMaxColumn);
+            mAddResId = ta.getResourceId(R.styleable.CreateNineGridLayout_cngl_add, mAddResId);
+            mMaxCount = ta.getInteger(R.styleable.CreateNineGridLayout_cngl_maxCount, mMaxCount);
 
             ta.recycle();
         }
+    }
+
+    private void initView() {
+        notifyDataSetChanged();
     }
 
     @Override
@@ -84,8 +100,14 @@ public abstract class CreateNineGridLayout<T extends View> extends ViewGroup {
         int column = mMaxColumn;
 
         for (int i = 0; i < count; i++) {
-            T view = (T) getChildAt(i);
-            setItemView(view, mItemW, mItemH, mImgs.get(i));
+            View view = getChildAt(i);
+
+            if (TAG_ADD.equals(view.getTag()) && view instanceof ImageView) {
+                ((ImageView) view).setImageResource(mAddResId);
+
+            } else {
+                setItemView(((T) view), mItemW, mItemH, mImgs.get(i));
+            }
 
             if (i % column > 0) {
                 left += mSpace;
@@ -103,33 +125,40 @@ public abstract class CreateNineGridLayout<T extends View> extends ViewGroup {
         }
     }
 
+    public void setNewData(List<String> list) {
+        mImgs.clear();
+
+        if (list != null) {
+            mImgs.addAll(list);
+        }
+
+        notifyDataSetChanged();
+    }
+
     public void setData(List<String> list) {
-        mImgs = (list == null ? new ArrayList<String>() : list);
+        if (list != null) {
+            mImgs.addAll(list);
+        }
 
-        if (mImgs.size() == 0) {
-            removeAllViews();
-            mOldNum = 0;
+        notifyDataSetChanged();
+    }
 
-        } else {
-            if (mOldNum == 0) {
-                for (int i = 0; i < list.size(); i++) {
-                    addView(createItemView());
-                }
+    private void notifyDataSetChanged() {
+        removeAllViews();
 
-            } else {
-                if (mOldNum > list.size()) {//新创建的比之前的要少，则减去多余的部分
-                    removeViews(list.size() - 1, mOldNum - list.size());
-
-                } else if (mOldNum < list.size()) {//新创建的比之前的要少，则添加缺少的部分
-                    for (int i = 0; i < list.size() - mOldNum; i++) {
-                        addView(createItemView());
-                    }
-                }
+        if (mImgs != null) {
+            for (int i = 0; i < mImgs.size(); i++) {
+                addView(createItemView());
             }
-
-            mOldNum = list.size();
+            if (mImgs.size() < mMaxCount) {
+                ImageView iv = createAddView();
+                iv.setTag(TAG_ADD);
+                addView(iv);
+            }
         }
     }
+
+    public abstract ImageView createAddView();
 
     public abstract T createItemView();
 

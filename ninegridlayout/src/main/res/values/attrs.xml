@@ -9,6 +9,8 @@
     <declare-styleable name="CreateNineGridLayout">
         <attr name="cngl_space" format="dimension" />
         <attr name="cngl_maxColumn" format="integer" />
+        <attr name="cngl_add" format="reference" />
+        <attr name="cngl_maxCount" format="integer" />
     </declare-styleable>
 
 </resources>

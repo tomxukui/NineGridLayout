@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.widget.ImageView;
 
 import com.ablingbling.library.ninegridlayout.CreateNineGridLayout;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -43,6 +44,12 @@ public class CreateDraweeNineGridLayout extends CreateNineGridLayout<SimpleDrawe
     public CreateDraweeNineGridLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         mContext = context;
+    }
+
+    @Override
+    public ImageView createAddView() {
+        ImageView iv = new ImageView(mContext);
+        return iv;
     }
 
     @Override
