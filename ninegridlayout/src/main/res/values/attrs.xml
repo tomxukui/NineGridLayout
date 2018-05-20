@@ -6,4 +6,9 @@
         <attr name="ngl_maxColumn" format="integer" />
     </declare-styleable>
 
+    <declare-styleable name="CreateNineGridLayout">
+        <attr name="cngl_space" format="dimension" />
+        <attr name="cngl_maxColumn" format="integer" />
+    </declare-styleable>
+
 </resources>
