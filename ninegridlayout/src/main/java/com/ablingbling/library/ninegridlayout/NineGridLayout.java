@@ -21,6 +21,8 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
     private int mOldNum;
     private List<String> mImgs;
 
+    private OnNineGridLayoutListener mOnNineGridLayoutListener;
+
     public NineGridLayout(Context context) {
         super(context);
         initData(context, null, 0);
@@ -85,8 +87,20 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
         int column = (count == 4 ? 2 : Math.min(count, mMaxColumn));
 
         for (int i = 0; i < count; i++) {
-            T view = (T) getChildAt(i);
-            setItemView(view, mItemW, mItemH, mImgs.get(i));
+            final T view = (T) getChildAt(i);
+            final int position = i;
+            final String imgUrl = mImgs.get(i);
+            setItemView(view, mItemW, mItemH, imgUrl);
+            view.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    if (mOnNineGridLayoutListener != null) {
+                        mOnNineGridLayoutListener.onItemClickListener(NineGridLayout.this, view, position, imgUrl);
+                    }
+                }
+
+            });
 
             if (i % column > 0) {
                 left += mSpace;
@@ -135,5 +149,15 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
     public abstract T createItemView();
 
     public abstract T setItemView(T view, int viewWidth, int viewHeight, String imgUrl);
+
+    public void setOnNineGridLayoutListener(OnNineGridLayoutListener listener) {
+        this.mOnNineGridLayoutListener = listener;
+    }
+
+    public interface OnNineGridLayoutListener {
+
+        void onItemClickListener(NineGridLayout view, View itemView, int position, String imgUrl);
+
+    }
 
 }

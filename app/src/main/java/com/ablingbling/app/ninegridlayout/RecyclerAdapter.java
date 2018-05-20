@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.ablingbling.library.ninegridlayout.NineGridLayout;
 
 import java.util.List;
 
@@ -30,8 +33,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        ((RVMoreViewHolder) holder).tv_name.setText("Row " + position);
-        ((RVMoreViewHolder) holder).grid_nine.setData(mList.get(position));
+        RVMoreViewHolder vh = (RVMoreViewHolder) holder;
+
+        vh.tv_name.setText("Row " + position);
+        vh.grid_nine.setData(mList.get(position));
+        vh.grid_nine.setOnNineGridLayoutListener(new NineGridLayout.OnNineGridLayoutListener() {
+
+            @Override
+            public void onItemClickListener(NineGridLayout view, View itemView, int position, String imgUrl) {
+                Toast.makeText(mContext, "position: " + position, Toast.LENGTH_SHORT).show();
+            }
+
+        });
     }
 
     @Override
