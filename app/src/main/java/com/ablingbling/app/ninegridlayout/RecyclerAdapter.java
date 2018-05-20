@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        ((RVMoreViewHolder) holder).tv_name.setText("Row " + position);
         ((RVMoreViewHolder) holder).grid_nine.setData(mList.get(position));
     }
 
@@ -39,10 +41,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
 
     public class RVMoreViewHolder extends RecyclerView.ViewHolder {
 
+        TextView tv_name;
         DraweeNineGridLayout grid_nine;
 
         public RVMoreViewHolder(View itemView) {
             super(itemView);
+            tv_name = itemView.findViewById(R.id.tv_name);
             grid_nine = itemView.findViewById(R.id.grid_nine);
         }
 
