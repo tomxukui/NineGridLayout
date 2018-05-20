@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class NineGridLayout<T extends View> extends ViewGroup {
@@ -17,7 +18,7 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
     private int mItemW;
     private int mItemH;
     private int mRow;
-    private int mOldNum = 0;
+    private int mOldNum;
     private List<String> mImgs;
 
     public NineGridLayout(Context context) {
@@ -44,6 +45,7 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
     private void initData(Context context, AttributeSet attrs, int defStyleAttr) {
         mSpace = DensityUtil.dp2px(10);
         mMaxColumn = 3;
+        mOldNum = 0;
 
         if (attrs != null) {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.NineGridLayout, defStyleAttr, 0);
@@ -58,14 +60,20 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         this.setMeasuredDimension(getDefaultSize(0, widthMeasureSpec), getDefaultSize(0, heightMeasureSpec));
-        int count = mImgs.size();
-        mRow = count / mMaxColumn + (count % mMaxColumn == 0 ? 0 : 1);
-        int maxColumn = (count == 4 ? 2 : Math.min(count, mMaxColumn));
-        mItemW = (getMeasuredWidth() - mSpace * (maxColumn - 1)) / maxColumn;
-        mItemH = mItemW;
+        int count = getChildCount();
+        if (count == 0) {
+            widthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY);
+            heightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY);
 
-        widthMeasureSpec = MeasureSpec.makeMeasureSpec(count == 0 ? 0 : getMeasuredWidth(), MeasureSpec.EXACTLY);
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(mItemH * mRow + mSpace * (mRow - 1), MeasureSpec.EXACTLY);
+        } else {
+            mRow = count / mMaxColumn + (count % mMaxColumn == 0 ? 0 : 1);
+            int maxColumn = (count == 4 ? 2 : Math.min(count, mMaxColumn));
+            mItemW = (getMeasuredWidth() - mSpace * (maxColumn - 1)) / maxColumn;
+            mItemH = mItemW;
+
+            widthMeasureSpec = MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY);
+            heightMeasureSpec = MeasureSpec.makeMeasureSpec(mItemH * mRow + mSpace * (mRow - 1), MeasureSpec.EXACTLY);
+        }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
@@ -97,10 +105,13 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
     }
 
     public void setData(List<String> list) {
-        mImgs = list;
+        mImgs = (list == null ? new ArrayList<String>() : list);
 
-        if (list.size() != 0) {
-            //从来没有创建过
+        if (mImgs.size() == 0) {
+            removeAllViews();
+            mOldNum = 0;
+
+        } else {
             if (mOldNum == 0) {
                 for (int i = 0; i < list.size(); i++) {
                     addView(createItemView());
@@ -116,11 +127,8 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
                     }
                 }
             }
-            mOldNum = list.size();
 
-        } else {
-            removeAllViews();
-            mOldNum = 0;
+            mOldNum = list.size();
         }
     }
 

@@ -35,11 +35,12 @@ public class MainActivity extends AppCompatActivity {
         List<List<String>> list = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             List<String> l = new ArrayList<>();
-            list.add(l);
 
             for (int j = 0; j < i; j++) {
                 l.add(images[j]);
             }
+
+            list.add(l);
         }
 
         recyclerView = findViewById(R.id.recyclerView);
