@@ -13,23 +13,6 @@ import java.util.List;
  */
 public class ImgsActivity extends AppCompatActivity {
 
-
-    private static final String[] images = new String[]{
-            "http://d.lanrentuku.com/down/png/1406/fifa_world_cup_2014_teams_country_flags/portugal-flag-icon.png",
-            "http://d.lanrentuku.com/down/png/1406/fifa_world_cup_2014_teams_country_flags/usa-flag-icon.png",
-            "http://d.lanrentuku.com/down/png/1406/fifa_world_cup_2014_teams_country_flags/spain-flag-icon.png",
-            "http://d.lanrentuku.com/down/png/1406/fifa_world_cup_2014_teams_country_flags/chile-flag-icon.png",
-            "http://d.lanrentuku.com/down/png/1406/fifa_world_cup_2014_teams_country_flags/brazil-flag-icon.png",
-            "http://d.lanrentuku.com/down/png/1406/fifa_world_cup_2014_teams_country_flags/Japan-flag-icon.png",
-            "http://d.lanrentuku.com/down/png/1406/fifa_world_cup_2014_teams_country_flags/england-flag-icon.png",
-            "http://d.lanrentuku.com/down/png/1406/fifa_world_cup_2014_teams_country_flags/germany-flag-icon.png",
-            "http://d.lanrentuku.com/down/png/1406/fifa_world_cup_2014_teams_country_flags/argentina-flag-icon.png",
-            "http://d.lanrentuku.com/down/png/1406/fifa_world_cup_2014_teams_country_flags/korea-republic-flag-icon.png",
-            "http://d.lanrentuku.com/down/png/1406/fifa_world_cup_2014_teams_country_flags/italy-flag-icon.png",
-            "http://d.lanrentuku.com/down/png/1406/fifa_world_cup_2014_teams_country_flags/belgium-flag-icon.png",
-            "http://d.lanrentuku.com/down/png/1406/fifa_world_cup_2014_teams_country_flags/netherlands-flag-icon.png",
-            "http://d.lanrentuku.com/down/png/1406/fifa_world_cup_2014_teams_country_flags/france-flag-icon.png"};
-
     private RecyclerView recyclerView;
 
     @Override
@@ -37,11 +20,11 @@ public class ImgsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imgs);
         List<List<String>> list = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 10; i++) {
             List<String> l = new ArrayList<>();
 
             for (int j = 0; j < i; j++) {
-                l.add(images[j]);
+                l.add(DataHelper.images[j]);
             }
 
             list.add(l);

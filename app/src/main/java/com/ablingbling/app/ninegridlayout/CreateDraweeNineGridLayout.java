@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 import com.ablingbling.library.ninegridlayout.CreateNineGridLayout;
 import com.facebook.drawee.backends.pipeline.Fresco;

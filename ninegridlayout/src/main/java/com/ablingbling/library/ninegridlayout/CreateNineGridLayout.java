@@ -26,6 +26,7 @@ public abstract class CreateNineGridLayout<T extends View> extends ViewGroup {
     private int mItemH;
     private int mRow;
     private List<String> mImgs;
+    private OnCreateNineGridLayoutListener mOnCreateNineGridLayoutListener;
 
     public CreateNineGridLayout(Context context) {
         super(context);
@@ -103,13 +104,37 @@ public abstract class CreateNineGridLayout<T extends View> extends ViewGroup {
         int column = mMaxColumn;
 
         for (int i = 0; i < count; i++) {
-            View view = getChildAt(i);
+            final View view = getChildAt(i);
 
             if (TAG_ADD.equals(view.getTag()) && view instanceof ImageView) {
-                ((ImageView) view).setImageResource(mAddResId);
+                final ImageView iv = (ImageView) view;
+                iv.setImageResource(mAddResId);
+                iv.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        if (mOnCreateNineGridLayoutListener != null) {
+                            mOnCreateNineGridLayoutListener.onAddClickListener(CreateNineGridLayout.this, iv);
+                        }
+                    }
+
+                });
 
             } else {
-                setItemView(((T) view), mItemW, mItemH, mImgs.get(i));
+                final T itemView = (T) view;
+                final int position = i;
+                final String imgUrl = mImgs.get(i);
+                setItemView(itemView, mItemW, mItemH, imgUrl);
+                itemView.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        if (mOnCreateNineGridLayoutListener != null) {
+                            mOnCreateNineGridLayoutListener.onItemClickListener(CreateNineGridLayout.this, itemView, position, imgUrl);
+                        }
+                    }
+
+                });
             }
 
             if (i % column > 0) {
@@ -138,12 +163,16 @@ public abstract class CreateNineGridLayout<T extends View> extends ViewGroup {
         notifyDataSetChanged();
     }
 
-    public void addData(List<String> list) {
-        if (list != null) {
-            mImgs.addAll(list);
+    public void addData(String img) {
+        if (img != null && img.length() > 0) {
+            mImgs.add(img);
         }
 
         notifyDataSetChanged();
+    }
+
+    public List<String> getImages() {
+        return mImgs;
     }
 
     private void notifyDataSetChanged() {
@@ -163,5 +192,17 @@ public abstract class CreateNineGridLayout<T extends View> extends ViewGroup {
     public abstract T createItemView();
 
     public abstract T setItemView(T view, int viewWidth, int viewHeight, String imgUrl);
+
+    public void setOnCreateNineGridLayoutListener(OnCreateNineGridLayoutListener listener) {
+        mOnCreateNineGridLayoutListener = listener;
+    }
+
+    public interface OnCreateNineGridLayoutListener {
+
+        void onItemClickListener(CreateNineGridLayout view, View itemView, int position, String imgUrl);
+
+        void onAddClickListener(CreateNineGridLayout view, ImageView addView);
+
+    }
 
 }
