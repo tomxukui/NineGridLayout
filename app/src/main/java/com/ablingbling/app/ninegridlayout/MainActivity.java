@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             List<String> l = new ArrayList<>();
             list.add(l);
 
-            for (int j = 0; j < 1 + i; j++) {
+            for (int j = 0; j < i; j++) {
                 l.add(images[j]);
             }
         }
