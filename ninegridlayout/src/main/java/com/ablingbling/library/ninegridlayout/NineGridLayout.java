@@ -60,14 +60,9 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
         this.setMeasuredDimension(getDefaultSize(0, widthMeasureSpec), getDefaultSize(0, heightMeasureSpec));
         int count = mImgs.size();
         mRow = count / mMaxColumn + (count % mMaxColumn == 0 ? 0 : 1);
-        if (count <= mMaxColumn) {
-            mItemW = (getMeasuredWidth() - mSpace * (count - 1)) / count;
-            mItemH = mItemW;
-
-        } else {
-            mItemW = (getMeasuredWidth() - mSpace * (mMaxColumn - 1)) / mMaxColumn;
-            mItemH = mItemW;
-        }
+        int maxColumn = (count == 4 ? 2 : Math.min(count, mMaxColumn));
+        mItemW = (getMeasuredWidth() - mSpace * (maxColumn - 1)) / maxColumn;
+        mItemH = mItemW;
 
         widthMeasureSpec = MeasureSpec.makeMeasureSpec(count == 0 ? 0 : getMeasuredWidth(), MeasureSpec.EXACTLY);
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(mItemH * mRow + mSpace * (mRow - 1), MeasureSpec.EXACTLY);
@@ -79,7 +74,7 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
         int count = getChildCount();
         int left = 0;
         int top = 0;
-        int column = Math.min(count, mMaxColumn);
+        int column = (count == 4 ? 2 : Math.min(count, mMaxColumn));
 
         for (int i = 0; i < count; i++) {
             T view = (T) getChildAt(i);
