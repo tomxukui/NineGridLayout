@@ -47,12 +47,6 @@ public class CreateDraweeNineGridLayout extends CreateNineGridLayout<SimpleDrawe
     }
 
     @Override
-    public ImageView createAddView() {
-        ImageView iv = new ImageView(mContext);
-        return iv;
-    }
-
-    @Override
     public SimpleDraweeView createItemView() {
         GenericDraweeHierarchyBuilder builder = new GenericDraweeHierarchyBuilder(getResources());
         GenericDraweeHierarchy hierarchy = builder

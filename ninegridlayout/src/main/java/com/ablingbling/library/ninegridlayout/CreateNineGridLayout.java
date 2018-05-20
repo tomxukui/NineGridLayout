@@ -16,6 +16,8 @@ public abstract class CreateNineGridLayout<T extends View> extends ViewGroup {
 
     private static final String TAG_ADD = "TAG_ADD";
 
+    private Context mContext;
+
     private int mSpace;
     private int mMaxColumn;
     private int mMaxCount;
@@ -51,6 +53,7 @@ public abstract class CreateNineGridLayout<T extends View> extends ViewGroup {
     }
 
     private void initData(Context context, AttributeSet attrs, int defStyleAttr) {
+        mContext = context;
         mSpace = DensityUtil.dp2px(10);
         mMaxColumn = 4;
         mAddResId = R.drawable.ic_add;
@@ -135,7 +138,7 @@ public abstract class CreateNineGridLayout<T extends View> extends ViewGroup {
         notifyDataSetChanged();
     }
 
-    public void setData(List<String> list) {
+    public void addData(List<String> list) {
         if (list != null) {
             mImgs.addAll(list);
         }
@@ -146,19 +149,16 @@ public abstract class CreateNineGridLayout<T extends View> extends ViewGroup {
     private void notifyDataSetChanged() {
         removeAllViews();
 
-        if (mImgs != null) {
-            for (int i = 0; i < mImgs.size(); i++) {
-                addView(createItemView());
-            }
-            if (mImgs.size() < mMaxCount) {
-                ImageView iv = createAddView();
-                iv.setTag(TAG_ADD);
-                addView(iv);
-            }
+        for (int i = 0; i < mImgs.size(); i++) {
+            addView(createItemView());
+        }
+        if (mImgs.size() < mMaxCount) {
+            ImageView iv = new ImageView(mContext);
+            iv.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            iv.setTag(TAG_ADD);
+            addView(iv);
         }
     }
-
-    public abstract ImageView createAddView();
 
     public abstract T createItemView();
 
