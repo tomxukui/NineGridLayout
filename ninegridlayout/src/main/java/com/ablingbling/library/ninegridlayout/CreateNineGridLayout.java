@@ -26,7 +26,8 @@ public abstract class CreateNineGridLayout<T extends View> extends ViewGroup {
     private int mItemH;
     private int mRow;
     private List<String> mImgs;
-    private OnCreateNineGridLayoutListener mOnCreateNineGridLayoutListener;
+    private OnItemClickListener mOnItemClickListener;
+    private OnAddClickListener mOnAddClickListener;
 
     public CreateNineGridLayout(Context context) {
         super(context);
@@ -113,8 +114,8 @@ public abstract class CreateNineGridLayout<T extends View> extends ViewGroup {
 
                     @Override
                     public void onClick(View v) {
-                        if (mOnCreateNineGridLayoutListener != null) {
-                            mOnCreateNineGridLayoutListener.onAddClickListener(CreateNineGridLayout.this, iv);
+                        if (mOnAddClickListener != null) {
+                            mOnAddClickListener.onAddClick(CreateNineGridLayout.this, iv);
                         }
                     }
 
@@ -129,8 +130,8 @@ public abstract class CreateNineGridLayout<T extends View> extends ViewGroup {
 
                     @Override
                     public void onClick(View v) {
-                        if (mOnCreateNineGridLayoutListener != null) {
-                            mOnCreateNineGridLayoutListener.onItemClickListener(CreateNineGridLayout.this, itemView, position, imgUrl);
+                        if (mOnItemClickListener != null) {
+                            mOnItemClickListener.onItemClick(CreateNineGridLayout.this, itemView, position, imgUrl);
                         }
                     }
 
@@ -175,7 +176,23 @@ public abstract class CreateNineGridLayout<T extends View> extends ViewGroup {
         return mImgs;
     }
 
-    private void notifyDataSetChanged() {
+    public void setSpace(int space) {
+        mSpace = space;
+    }
+
+    public void setMaxColumn(int maxColumn) {
+        mMaxColumn = maxColumn;
+    }
+
+    public void setAddResId(int addResId) {
+        mAddResId = addResId;
+    }
+
+    public void setMaxCount(int maxCount) {
+        mMaxCount = maxCount;
+    }
+
+    public void notifyDataSetChanged() {
         removeAllViews();
 
         for (int i = 0; i < mImgs.size(); i++) {
@@ -193,15 +210,23 @@ public abstract class CreateNineGridLayout<T extends View> extends ViewGroup {
 
     public abstract T setItemView(T view, int viewWidth, int viewHeight, String imgUrl);
 
-    public void setOnCreateNineGridLayoutListener(OnCreateNineGridLayoutListener listener) {
-        mOnCreateNineGridLayoutListener = listener;
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mOnItemClickListener = listener;
     }
 
-    public interface OnCreateNineGridLayoutListener {
+    public void setOnAddClickListener(OnAddClickListener listener) {
+        mOnAddClickListener = listener;
+    }
 
-        void onItemClickListener(CreateNineGridLayout view, View itemView, int position, String imgUrl);
+    public interface OnItemClickListener {
 
-        void onAddClickListener(CreateNineGridLayout view, ImageView addView);
+        void onItemClick(CreateNineGridLayout view, View itemView, int position, String imgUrl);
+
+    }
+
+    public interface OnAddClickListener {
+
+        void onAddClick(CreateNineGridLayout view, ImageView itemView);
 
     }
 

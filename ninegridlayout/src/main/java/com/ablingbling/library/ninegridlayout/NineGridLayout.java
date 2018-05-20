@@ -21,7 +21,7 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
     private int mOldNum;
     private List<String> mImgs;
 
-    private OnNineGridLayoutListener mOnNineGridLayoutListener;
+    private OnItemClickListener mOnItemClickListener;
 
     public NineGridLayout(Context context) {
         super(context);
@@ -95,8 +95,8 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
 
                 @Override
                 public void onClick(View v) {
-                    if (mOnNineGridLayoutListener != null) {
-                        mOnNineGridLayoutListener.onItemClickListener(NineGridLayout.this, view, position, imgUrl);
+                    if (mOnItemClickListener != null) {
+                        mOnItemClickListener.onItemClick(NineGridLayout.this, view, position, imgUrl);
                     }
                 }
 
@@ -150,13 +150,13 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
 
     public abstract T setItemView(T view, int viewWidth, int viewHeight, String imgUrl);
 
-    public void setOnNineGridLayoutListener(OnNineGridLayoutListener listener) {
-        this.mOnNineGridLayoutListener = listener;
+    public void setOnNineGridLayoutListener(OnItemClickListener listener) {
+        mOnItemClickListener = listener;
     }
 
-    public interface OnNineGridLayoutListener {
+    public interface OnItemClickListener {
 
-        void onItemClickListener(NineGridLayout view, View itemView, int position, String imgUrl);
+        void onItemClick(NineGridLayout view, View itemView, int position, String imgUrl);
 
     }
 
