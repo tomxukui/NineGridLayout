@@ -6,7 +6,6 @@ package com.ablingbling.app.ninegridlayout;
 public class DataHelper {
 
     public static final String[] images = new String[]{
-            "http://b4-q.mafengwo.net/s6/M00/80/AB/wKgB4lL5tX6AZGB6ABBgnBkJakw73.jpeg",
             "http://d.lanrentuku.com/down/png/1406/fifa_world_cup_2014_teams_country_flags/portugal-flag-icon.png",
             "http://d.lanrentuku.com/down/png/1406/fifa_world_cup_2014_teams_country_flags/usa-flag-icon.png",
             "http://d.lanrentuku.com/down/png/1406/fifa_world_cup_2014_teams_country_flags/spain-flag-icon.png",
