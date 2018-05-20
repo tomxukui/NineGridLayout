@@ -46,7 +46,7 @@ public class DraweeNineGridLayout extends NineGridLayout<SimpleDraweeView> {
     }
 
     @Override
-    public SimpleDraweeView createItemView() {
+    protected SimpleDraweeView createItemView() {
         GenericDraweeHierarchyBuilder builder = new GenericDraweeHierarchyBuilder(getResources());
         GenericDraweeHierarchy hierarchy = builder
                 .setPlaceholderImage(R.mipmap.ic_launcher)
@@ -64,7 +64,7 @@ public class DraweeNineGridLayout extends NineGridLayout<SimpleDraweeView> {
     }
 
     @Override
-    public SimpleDraweeView setItemView(SimpleDraweeView view, int viewWidth, int viewHeight, String imgUrl) {
+    protected SimpleDraweeView setItemView(SimpleDraweeView view, int viewWidth, int viewHeight, String imgUrl) {
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(imgUrl))
                 .setResizeOptions(new ResizeOptions(viewWidth, viewHeight)).build();
         DraweeController draweeController = Fresco.newDraweeControllerBuilder()

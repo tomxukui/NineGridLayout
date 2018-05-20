@@ -206,9 +206,9 @@ public abstract class CreateNineGridLayout<T extends View> extends ViewGroup {
         }
     }
 
-    public abstract T createItemView();
+    protected abstract T createItemView();
 
-    public abstract T setItemView(T view, int viewWidth, int viewHeight, String imgUrl);
+    protected abstract T setItemView(T view, int viewWidth, int viewHeight, String imgUrl);
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         mOnItemClickListener = listener;

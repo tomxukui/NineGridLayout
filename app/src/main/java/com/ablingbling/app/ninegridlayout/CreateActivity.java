@@ -22,15 +22,10 @@ public class CreateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create);
 
         CreateDraweeNineGridLayout grid_create = findViewById(R.id.grid_create);
-        grid_create.setOnCreateNineGridLayoutListener(new CreateNineGridLayout.OnCreateNineGridLayoutListener() {
+        grid_create.setOnAddClickListener(new CreateNineGridLayout.OnAddClickListener() {
 
             @Override
-            public void onItemClickListener(CreateNineGridLayout view, View itemView, int position, String imgUrl) {
-                Toast.makeText(CreateActivity.this, "position: " + position, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onAddClickListener(CreateNineGridLayout view, ImageView addView) {
+            public void onAddClick(CreateNineGridLayout view, ImageView itemView) {
                 int totalCount = DataHelper.images.length;
 
                 mIndex++;
@@ -39,6 +34,14 @@ public class CreateActivity extends AppCompatActivity {
                 }
 
                 view.addData(DataHelper.images[mIndex]);
+            }
+
+        });
+        grid_create.setOnItemClickListener(new CreateNineGridLayout.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(CreateNineGridLayout view, View itemView, int position, String imgUrl) {
+                Toast.makeText(CreateActivity.this, "position: " + position, Toast.LENGTH_SHORT).show();
             }
 
         });
