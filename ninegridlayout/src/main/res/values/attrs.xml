@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="NineGridLayout">
+        <attr name="ngl_space" format="dimension" />
+        <attr name="ngl_maxColumn" format="integer" />
+    </declare-styleable>
+
+</resources>
