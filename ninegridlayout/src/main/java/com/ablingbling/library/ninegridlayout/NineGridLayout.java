@@ -150,7 +150,7 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
 
     public abstract T setItemView(T view, int viewWidth, int viewHeight, String imgUrl);
 
-    public void setOnNineGridLayoutListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         mOnItemClickListener = listener;
     }
 

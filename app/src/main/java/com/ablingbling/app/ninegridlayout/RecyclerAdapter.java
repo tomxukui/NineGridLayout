@@ -37,10 +37,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
 
         vh.tv_name.setText("Row " + position);
         vh.grid_nine.setData(mList.get(position));
-        vh.grid_nine.setOnNineGridLayoutListener(new NineGridLayout.OnNineGridLayoutListener() {
+        vh.grid_nine.setOnItemClickListener(new NineGridLayout.OnItemClickListener() {
 
             @Override
-            public void onItemClickListener(NineGridLayout view, View itemView, int position, String imgUrl) {
+            public void onItemClick(NineGridLayout view, View itemView, int position, String imgUrl) {
                 Toast.makeText(mContext, "position: " + position, Toast.LENGTH_SHORT).show();
             }
 
