@@ -71,7 +71,20 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
             mRow = count / mMaxColumn + (count % mMaxColumn == 0 ? 0 : 1);
             int maxColumn = (count == 4 ? 2 : Math.min(count, mMaxColumn));
             mItemW = (getMeasuredWidth() - mSpace * (maxColumn - 1)) / maxColumn;
-            mItemH = mItemW;
+            if (mList.size() == 1) {
+                int w = getItemWidth(mList.get(0));
+                int h = getItemHeight(mList.get(0));
+
+                if (w > 0 && h > 0) {
+                    mItemH = mItemW * h / w;
+
+                } else {
+                    mItemH = mItemW;
+                }
+
+            } else {
+                mItemH = mItemW;
+            }
 
             widthMeasureSpec = MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY);
             heightMeasureSpec = MeasureSpec.makeMeasureSpec(mItemH * mRow + mSpace * (mRow - 1), MeasureSpec.EXACTLY);
@@ -145,6 +158,10 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
             mOldNum = list.size();
         }
     }
+
+    protected abstract int getItemWidth(Object o);
+
+    protected abstract int getItemHeight(Object o);
 
     protected abstract String getUrl(Object o);
 

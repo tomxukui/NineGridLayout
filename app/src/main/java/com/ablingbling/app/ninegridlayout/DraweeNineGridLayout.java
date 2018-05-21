@@ -46,6 +46,16 @@ public class DraweeNineGridLayout extends NineGridLayout<SimpleDraweeView> {
     }
 
     @Override
+    protected int getItemWidth(Object o) {
+        return 0;
+    }
+
+    @Override
+    protected int getItemHeight(Object o) {
+        return 0;
+    }
+
+    @Override
     protected String getUrl(Object o) {
         return (String) o;
     }
