@@ -78,6 +78,11 @@ public abstract class NineGridLayout<T extends View, D> extends ViewGroup {
                 if (w > 0 && h > 0) {
                     mItemH = mItemW * h / w;
 
+                    int maxH = mItemW * 2;
+                    if (mItemH > maxH) {
+                        mItemH = maxH;
+                    }
+
                 } else {
                     mItemH = mItemW;
                 }
