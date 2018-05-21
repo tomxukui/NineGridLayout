@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class NineGridLayout<T extends View> extends ViewGroup {
+public abstract class NineGridLayout<T extends View, D> extends ViewGroup {
 
     private int mSpace;
     private int mMaxColumn;
@@ -19,7 +19,7 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
     private int mItemH;
     private int mRow;
     private int mOldNum;
-    private List mList;
+    private List<D> mList;
 
     private OnItemClickListener mOnItemClickListener;
 
@@ -159,11 +159,11 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
         }
     }
 
-    protected abstract int getItemWidth(Object o);
+    protected abstract int getItemWidth(D item);
 
-    protected abstract int getItemHeight(Object o);
+    protected abstract int getItemHeight(D item);
 
-    protected abstract String getUrl(Object o);
+    protected abstract String getUrl(D item);
 
     protected abstract T createItemView();
 

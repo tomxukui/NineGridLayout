@@ -34,8 +34,8 @@ ext {
             compileSdkVersion: 27,
             minSdkVersion    : 14,
             targetSdkVersion : 27,
-            appVersionCode   : 201,
-            appVersionName   : "2.0.1"
+            appVersionCode   : 202,
+            appVersionName   : "2.0.2"
     ]
 
     dependencies = [

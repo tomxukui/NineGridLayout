@@ -20,7 +20,7 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 /**
  * Created by xukui on 2018/5/20.
  */
-public class DraweeNineGridLayout extends NineGridLayout<SimpleDraweeView> {
+public class DraweeNineGridLayout extends NineGridLayout<SimpleDraweeView, String> {
 
     private Context mContext;
 
@@ -46,18 +46,18 @@ public class DraweeNineGridLayout extends NineGridLayout<SimpleDraweeView> {
     }
 
     @Override
-    protected int getItemWidth(Object o) {
+    protected int getItemWidth(String item) {
         return 0;
     }
 
     @Override
-    protected int getItemHeight(Object o) {
+    protected int getItemHeight(String item) {
         return 0;
     }
 
     @Override
-    protected String getUrl(Object o) {
-        return (String) o;
+    protected String getUrl(String item) {
+        return item;
     }
 
     @Override
