@@ -19,7 +19,7 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
     private int mItemH;
     private int mRow;
     private int mOldNum;
-    private List<String> mImgs;
+    private List mList;
 
     private OnItemClickListener mOnItemClickListener;
 
@@ -89,7 +89,7 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
         for (int i = 0; i < count; i++) {
             final T view = (T) getChildAt(i);
             final int position = i;
-            final String imgUrl = mImgs.get(i);
+            final String imgUrl = getUrl(mList.get(i));
             setItemView(view, mItemW, mItemH, imgUrl);
             view.setOnClickListener(new OnClickListener() {
 
@@ -118,10 +118,10 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
         }
     }
 
-    public void setData(List<String> list) {
-        mImgs = (list == null ? new ArrayList<String>() : list);
+    public void setData(List list) {
+        mList = (list == null ? new ArrayList<>() : list);
 
-        if (mImgs.size() == 0) {
+        if (mList.size() == 0) {
             removeAllViews();
             mOldNum = 0;
 
@@ -145,6 +145,8 @@ public abstract class NineGridLayout<T extends View> extends ViewGroup {
             mOldNum = list.size();
         }
     }
+
+    protected abstract String getUrl(Object o);
 
     protected abstract T createItemView();
 

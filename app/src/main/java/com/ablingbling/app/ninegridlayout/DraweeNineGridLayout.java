@@ -46,6 +46,11 @@ public class DraweeNineGridLayout extends NineGridLayout<SimpleDraweeView> {
     }
 
     @Override
+    protected String getUrl(Object o) {
+        return (String) o;
+    }
+
+    @Override
     protected SimpleDraweeView createItemView() {
         GenericDraweeHierarchyBuilder builder = new GenericDraweeHierarchyBuilder(getResources());
         GenericDraweeHierarchy hierarchy = builder
