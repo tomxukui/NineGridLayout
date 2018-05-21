@@ -33,9 +33,7 @@ ext {
     android = [
             compileSdkVersion: 27,
             minSdkVersion    : 14,
-            targetSdkVersion : 27,
-            appVersionCode   : 203,
-            appVersionName   : "2.0.3"
+            targetSdkVersion : 27
     ]
 
     dependencies = [

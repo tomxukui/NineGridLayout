@@ -7,8 +7,8 @@ android {
         applicationId "com.ablingbling.app.ninegridlayout"
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode rootProject.ext.android.appVersionCode
-        versionName rootProject.ext.android.appVersionName
+        versionCode 204
+        versionName '2.0.4'
     }
 
     buildTypes {
@@ -24,8 +24,6 @@ dependencies {
     implementation rootProject.ext.dependencies["appcompat-v7"]
     implementation rootProject.ext.dependencies["design"]
     implementation project(':ninegridlayout')
-
-    //图片下载 https://github.com/facebook/fresco
     implementation 'com.facebook.fresco:fresco:1.9.0'
 }
 
